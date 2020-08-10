@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertController } from '@ionic/angular';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +15,8 @@ export class RegisterPage implements OnInit {
   testName = new FormControl('');
 
   constructor(public authService: AuthService,
-    public alertController: AlertController) { }
+    public alertController: AlertController,
+    private fb: FormBuilder) { }
 
   ngOnInit() {
   }
@@ -51,5 +52,41 @@ export class RegisterPage implements OnInit {
   testButton(){
     this.showAlert('Form value is', '', this.testName.value);
   }
+  changeToRussia(){
+    this.testName.setValue('Russia');
+  }
 
+  // userForm = new FormGroup({
+  //   name: new FormControl('Ubay Abdelgadir'),
+  //   email: new FormControl('obayit@gmail.com'),
+  //   password: new FormControl('poakshdq!#@$DS'),
+  //   confirmPassword: new FormControl('poakshdq!#@$DS'),
+  //   address: new FormGroup({
+  //     street: new FormControl('Al Mauna'),
+  //     city: new FormControl('Bahri'),
+  //     state: new FormControl('Khartoum'),
+  //   }),
+  // });
+  userForm = this.fb.group({
+    name: ['Ubay Abdelgadir', Validators.required],
+    email: ['obayit@gmail.com', Validators.required],
+    password: ['poakshdq!#@$DS', Validators.required],
+    confirmPassword: ['poakshdq!#@$DS', Validators.required],
+    address: this.fb.group({
+      street: ['Al Mauna'],
+      city: ['Bahri'],
+      state: ['Khartoum'],
+    }),
+  });
+  onSubmit(){
+    console.log(this.userForm);
+  }
+  updateNested(){
+    this.userForm.patchValue({
+      name: 'Ubay Abdelgadir Mohamed',
+      address: {
+        street: 'Shambat Western School St.'
+      }
+    });
+  }
 }

@@ -10,6 +10,53 @@
     <ion-label>Test Name</ion-label>
     <ion-input type="text" [formControl]="testName"></ion-input>
   </ion-item>
+  <ion-item>
+    <div><strong>Interpolated Value: </strong></div>
+    <div>{{testName.value}}</div>
+  </ion-item>
+  <ion-item>
+    <div><strong>Untouched: </strong></div>
+    <div>{{testName.untouched}}</div>
+  </ion-item>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating" required>Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" required>Email</ion-label>
+      <ion-input type="text" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" required>Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" required>Confirm Password</ion-label>
+      <ion-input type="password" formControlName="confirmPassword"></ion-input>
+    </ion-item>
+    <div formGroupName="address">
+      <ion-item>
+        <ion-label position="floating">Street</ion-label>
+        <ion-input type="text" formControlName="street"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">City</ion-label>
+        <ion-input type="text" formControlName="city"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">State</ion-label>
+        <ion-input type="text" formControlName="state"></ion-input>
+      </ion-item>
+    </div>
+    <ion-item>
+      <ion-text>Current Form Status is {{userForm.status}}</ion-text>
+    </ion-item>
+    <ion-button color="warning" type="submit" [disabled]="!userForm.valid">Register</ion-button>
+    <ion-button color="danger" (click)="updateNested()">Update Nested</ion-button>
+
+  </form>
+
   <!-- <ion-item>
     <ion-label>Name</ion-label>
     <ion-input type="text" [formControl]="user.name"></ion-input>
@@ -28,5 +75,5 @@
   </ion-item> -->
   <ion-button (click)="register()">Register</ion-button>
   <ion-button (click)="testButton()">Test Button</ion-button>
-
+  <ion-button (click)="changeToRussia()">Change to Russia</ion-button>
 </ion-content>
