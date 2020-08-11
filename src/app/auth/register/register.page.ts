@@ -11,8 +11,6 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class RegisterPage implements OnInit {
   user = new User();
-  confirmPassword: string;
-  testName = new FormControl('');
 
   constructor(public authService: AuthService,
     public alertController: AlertController,
@@ -26,7 +24,7 @@ export class RegisterPage implements OnInit {
   }
   validateData(){
     let validationHeader = 'Input Error';
-    if(this.user.password != this.confirmPassword){
+    if(this.user.password ) { //!= this.confirmPassword){
       this.showAlert(validationHeader, 'Password Mismatch',
       'The "password" and "confirm password" don\'t match');
     }
@@ -49,24 +47,6 @@ export class RegisterPage implements OnInit {
     });
     await alert.present();
   }
-  testButton(){
-    this.showAlert('Form value is', '', this.testName.value);
-  }
-  changeToRussia(){
-    this.testName.setValue('Russia');
-  }
-
-  // userForm = new FormGroup({
-  //   name: new FormControl('Ubay Abdelgadir'),
-  //   email: new FormControl('obayit@gmail.com'),
-  //   password: new FormControl('poakshdq!#@$DS'),
-  //   confirmPassword: new FormControl('poakshdq!#@$DS'),
-  //   address: new FormGroup({
-  //     street: new FormControl('Al Mauna'),
-  //     city: new FormControl('Bahri'),
-  //     state: new FormControl('Khartoum'),
-  //   }),
-  // });
   userForm = this.fb.group({
     name: ['Ubay Abdelgadir', Validators.required],
     email: ['obayit@gmail.com', Validators.required],
@@ -80,13 +60,5 @@ export class RegisterPage implements OnInit {
   });
   onSubmit(){
     console.log(this.userForm);
-  }
-  updateNested(){
-    this.userForm.patchValue({
-      name: 'Ubay Abdelgadir Mohamed',
-      address: {
-        street: 'Shambat Western School St.'
-      }
-    });
   }
 }
