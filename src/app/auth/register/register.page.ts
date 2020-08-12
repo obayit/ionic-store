@@ -49,7 +49,7 @@ export class RegisterPage implements OnInit {
   }
   userForm = this.fb.group({
     name: ['Ubay Abdelgadir', Validators.required],
-    email: ['obayit@gmail.com', Validators.required],
+    email: ['obayit@gmail.com', [Validators.required, Validators.email]],
     password: ['poakshdq!#@$DS', Validators.required],
     confirmPassword: ['poakshdq!#@$DS', Validators.required],
     address: this.fb.group({
@@ -61,4 +61,17 @@ export class RegisterPage implements OnInit {
   onSubmit(){
     console.log(this.userForm);
   }
+  validation_errors = {
+    name: ['Name is required'],
+    email: [],
+    password: [],
+    confirmPassword: [],
+    address: {
+      street: [],
+      city: [],
+      state: [],
+    },
+  }
+  get name() { return this.userForm.get('name'); }
+  get email() { return this.userForm.get('email'); }
 }

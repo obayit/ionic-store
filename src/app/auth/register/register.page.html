@@ -7,23 +7,46 @@
 <ion-content class="ion-padding">
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
     <ion-item>
-      <ion-label position="floating" required>Name</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input type="text" formControlName="name" required minlength="4"></ion-input>
+    </ion-item>
+    <ion-text color="danger">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)">
+        <p *ngIf="name.errors.required" class="ion-padding-start">
+          Name is required
+        </p>
+        <p *ngIf="name.errors.minlength" class="ion-padding-start">
+          Minimum length is 4 characters
+        </p>
+      </div>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" formControlName="email" required></ion-input>
+    </ion-item>
+    <ion-text color="danger">
+      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+        <p>{{email.dirty}}</p>
+        <p>{{email.touched}}</p>
+        <p *ngIf="email.errors.required" class="ion-padding-start">
+          Email is required
+        </p>
+        <p *ngIf="email.errors.email" class="ion-padding-start">
+          Invalid email
+        </p>
+      </div>
+    </ion-text>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" formControlName="password" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating" required>Email</ion-label>
-      <ion-input type="email" formControlName="email"></ion-input>
+      <ion-label position="floating">Confirm Password</ion-label>
+      <ion-input type="password" formControlName="confirmPassword" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating" required>Password</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating" required>Confirm Password</ion-label>
-      <ion-input type="password" formControlName="confirmPassword"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label required><strong>Address</strong> (optional)</ion-label>
+      <ion-label><strong>Address</strong> (optional)</ion-label>
     </ion-item>
     <div formGroupName="address">
       <ion-item>
