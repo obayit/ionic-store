@@ -2,7 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertController } from '@ionic/angular';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+
+export const matchPassword: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+  const password = control.get('password');
+  const confirmPassword = control.get('confirmPassword');
+  console.log('matchpassword', password?.value);
+  let meh = password && confirmPassword && password.value != confirmPassword.value ?
+  {matchPassword: 'Passwords don\'t match'} : null;
+  console.log(meh);
+  return meh;
+};
 
 @Component({
   selector: 'app-register',
@@ -51,27 +61,18 @@ export class RegisterPage implements OnInit {
     name: ['Ubay Abdelgadir', Validators.required],
     email: ['obayit@gmail.com', [Validators.required, Validators.email]],
     password: ['poakshdq!#@$DS', Validators.required],
-    confirmPassword: ['poakshdq!#@$DS', Validators.required],
+    confirmPassword: ['poakshdq!#@$Ds', Validators.required],
     address: this.fb.group({
       street: ['Al Mauna'],
       city: ['Bahri'],
       state: ['Khartoum'],
-    }),
-  });
+    })
+  }, { validators: matchPassword });
   onSubmit(){
     console.log(this.userForm);
   }
-  validation_errors = {
-    name: ['Name is required'],
-    email: [],
-    password: [],
-    confirmPassword: [],
-    address: {
-      street: [],
-      city: [],
-      state: [],
-    },
-  }
   get name() { return this.userForm.get('name'); }
   get email() { return this.userForm.get('email'); }
+  get password() { return this.userForm.get('password'); }
+  get confirmPassword() { return this.userForm.get('confirmPassword'); }
 }
