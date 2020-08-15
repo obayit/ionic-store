@@ -20,6 +20,7 @@ export const matchPassword: ValidatorFn = (control: FormGroup): ValidationErrors
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+  currentUser: User;
   user = new User();
   registerSpinner = false;
 
@@ -30,6 +31,9 @@ export class RegisterPage implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user[0];
+    });
   }
   async showAlert(header:string, message: string, subheader: string = ''){
     //maybe useful to show/handle backend errors;
@@ -43,7 +47,7 @@ export class RegisterPage implements OnInit {
   }
   userForm = this.fb.group({
     name: ['Ubay Abdelgadir', Validators.required],
-    email: ['obayitasdf@gmail.com', [Validators.required, Validators.email]],
+    email: ['obayitWithUser@gmail.com', [Validators.required, Validators.email]],
     password: ['poakshdq!#@$DS', Validators.required],
     confirmPassword: ['poakshdq!#@$DS', Validators.required],
     address: this.fb.group({

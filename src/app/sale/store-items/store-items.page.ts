@@ -18,11 +18,20 @@ export class StoreItemsPage implements OnInit {
     public router: Router,
   ) { }
 
-  ngOnInit() {
-    this.currentUser = this.authService.currentUser;
-    if(!this.currentUser){
-      this.router.navigateByUrl('register');
-    }
+  async ngOnInit() {
+    this.authService.currentAfUser().then((res) => {
+      console.log('store-items: currentAfUser is ');
+      console.log(res);
+      if(!res){
+        this.router.navigateByUrl('register');
+      }
+    });
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user[0];
+    });
+  }
+  refreshUser(){
+    // this.currentUser = this.authService.currentUser;
   }
 
 }

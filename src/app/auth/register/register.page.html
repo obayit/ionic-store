@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-title>Register</ion-title>
+    <ion-title *ngIf="currentUser" slot="end">{{currentUser.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -84,6 +85,7 @@
       <ion-spinner *ngIf="registerSpinner" slot="start"></ion-spinner>
       <div class="ion-padding">Register</div>
     </ion-button>
+    <ion-button color="secondary" routerLink="/login">Login</ion-button>
 
   </form>
   <!-- <ion-button (click)="register()">Register</ion-button> -->

@@ -1,9 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>store-items {{currentUser.name}}</ion-title>
+    <ion-title>store-items</ion-title>
+    <ion-title *ngIf="currentUser" slot="end">{{currentUser.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-button (click)="refreshUser()">Refresh User</ion-button>
 </ion-content>
