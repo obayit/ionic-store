@@ -3,15 +3,15 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertController } from '@ionic/angular';
 import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+import { Router } from '@angular/router';
 
 export const matchPassword: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
   const password = control.get('password');
   const confirmPassword = control.get('confirmPassword');
-  console.log('matchpassword', password?.value);
-  let meh = password && confirmPassword && password.value != confirmPassword.value ?
+  return password && confirmPassword && password.value != confirmPassword.value ?
   {matchPassword: 'Passwords don\'t match'} : null;
-  console.log(meh);
-  return meh;
 };
 
 @Component({
@@ -21,34 +21,18 @@ export const matchPassword: ValidatorFn = (control: FormGroup): ValidationErrors
 })
 export class RegisterPage implements OnInit {
   user = new User();
+  registerSpinner = false;
 
   constructor(public authService: AuthService,
     public alertController: AlertController,
+    public afAuth: AngularFireAuth,
+    public router: Router,
     private fb: FormBuilder) { }
 
   ngOnInit() {
   }
-  register(){
-    this.validateData();
-    this.authService.registerUser(this.user);
-  }
-  validateData(){
-    let validationHeader = 'Input Error';
-    if(this.user.password ) { //!= this.confirmPassword){
-      this.showAlert(validationHeader, 'Password Mismatch',
-      'The "password" and "confirm password" don\'t match');
-    }
-    if(this.user.name === ''){
-      this.showAlert(validationHeader, 'Empty Name',
-      'Please enter a username');
-    }
-    // if(this.user.password.regex.match('^([a-z0-9_.]){5,30}$')){
-    //   this.showAlert(validationHeader, 'Empty Password',
-    //   'Please enter a password');
-    // }
-    this.authService.registerUser(this.user);
-  }
-  async showAlert(header:string, message: string, subheader: string){
+  async showAlert(header:string, message: string, subheader: string = ''){
+    //maybe useful to show/handle backend errors;
     const alert = await this.alertController.create({
       header: header,
       subHeader: subheader,
@@ -59,20 +43,34 @@ export class RegisterPage implements OnInit {
   }
   userForm = this.fb.group({
     name: ['Ubay Abdelgadir', Validators.required],
-    email: ['obayit@gmail.com', [Validators.required, Validators.email]],
+    email: ['obayitasdf@gmail.com', [Validators.required, Validators.email]],
     password: ['poakshdq!#@$DS', Validators.required],
-    confirmPassword: ['poakshdq!#@$Ds', Validators.required],
+    confirmPassword: ['poakshdq!#@$DS', Validators.required],
     address: this.fb.group({
       street: ['Al Mauna'],
       city: ['Bahri'],
       state: ['Khartoum'],
+      // country: ['Sudan'] not that simple, countries have ISO code
     })
   }, { validators: matchPassword });
-  onSubmit(){
-    console.log(this.userForm);
+  async onSubmit(){
+    this.registerSpinner = true;
+    let user = new User();
+    user.name = this.name.value;
+    user.email = this.email.value;
+    user.address = this.address.value;
+    try{
+    await this.authService.registerUser(user, this.password.value);
+    }catch(error){
+      this.showAlert('Registration Failed', error);
+      console.log(error);
+    }
+    this.registerSpinner = false;
+    this.router.navigateByUrl('/store-items');
   }
   get name() { return this.userForm.get('name'); }
   get email() { return this.userForm.get('email'); }
   get password() { return this.userForm.get('password'); }
   get confirmPassword() { return this.userForm.get('confirmPassword'); }
+  get address() { return this.userForm.get('address'); }
 }

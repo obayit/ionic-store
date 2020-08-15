@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "obinic-maps": {
+      "hosting": {
+        "app": [
+          "obinic-maps"
+        ]
+      }
+    }
+  }
+}

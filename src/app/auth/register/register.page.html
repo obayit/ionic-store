@@ -80,10 +80,10 @@
         <ion-input type="text" formControlName="state"></ion-input>
       </ion-item>
     </div>
-    <ion-item>
-      <ion-text>Current Form Status is {{userForm.status}}</ion-text>
-    </ion-item>
-    <ion-button color="warning" type="submit" [disabled]="!userForm.valid">Register</ion-button>
+    <ion-button color="primary" type="submit" [disabled]="!userForm.valid">
+      <ion-spinner *ngIf="registerSpinner" slot="start"></ion-spinner>
+      <div class="ion-padding">Register</div>
+    </ion-button>
 
   </form>
   <!-- <ion-button (click)="register()">Register</ion-button> -->
