@@ -23,7 +23,7 @@ export class StoreItemsPage implements OnInit {
       console.log('store-items: currentAfUser is ');
       console.log(res);
       if(!res){
-        this.router.navigateByUrl('register');
+        // this.router.navigateByUrl('register');
       }
     });
     this.authService.currentUser.subscribe(user => {

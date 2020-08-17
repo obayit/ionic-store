@@ -6,6 +6,7 @@ import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, Valid
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 export const matchPassword: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
   const password = control.get('password');
@@ -21,6 +22,7 @@ export const matchPassword: ValidatorFn = (control: FormGroup): ValidationErrors
 })
 export class RegisterPage implements OnInit {
   currentUser: User;
+  currentUsername: string;
   user = new User();
   registerSpinner = false;
 
@@ -31,9 +33,11 @@ export class RegisterPage implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.authService.currentUser.subscribe(user => {
-      this.currentUser = user[0];
-    });
+    if(this.authService.currentUser){
+      this.authService.currentUser.subscribe(user => {
+        this.currentUser = user[0];
+      });
+    }
   }
   async showAlert(header:string, message: string, subheader: string = ''){
     //maybe useful to show/handle backend errors;
