@@ -1,0 +1,10 @@
+<div [formGroup]="form">
+  <ion-item>
+    <ion-label>{{field.label}}</ion-label>
+    <ion-input [type]="field.type" formControlName="field.key"></ion-input>
+  </ion-item>
+  <ion-text color="danger">
+<!-- TODO: validation             o-->
+    <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
+  </ion-text>
+</div>

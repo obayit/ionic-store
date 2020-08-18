@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'new-store-item',
     loadChildren: () => import('./store/new-store-item/new-store-item.module').then( m => m.NewStoreItemPageModule)
+  },
+  {
+    path: 'test-input',
+    loadChildren: () => import('./tools/test-input/test-input.module').then( m => m.TestInputPageModule)
   }
 ];
 
