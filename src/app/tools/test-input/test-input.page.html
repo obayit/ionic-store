@@ -7,6 +7,9 @@
 <ion-content>
 
   <form [formGroup]="form">
+    <div *ngFor="let ctrl of Object.keys(form.controls)">
+      <app-char-input [form]="form.controls[ctrl]"></app-char-input>
+    </div>
   </form>
 
 </ion-content>

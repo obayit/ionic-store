@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TestInputPageRoutingModule } from './test-input-routing.module';
 
 import { TestInputPage } from './test-input.page';
+import { CharInputComponent } from '../char-input/char-input.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { TestInputPage } from './test-input.page';
     TestInputPageRoutingModule,
     ReactiveFormsModule,
   ],
-  declarations: [TestInputPage]
+  declarations: [TestInputPage,
+  CharInputComponent]
 })
 export class TestInputPageModule {}
