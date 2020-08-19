@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>new-store-item</ion-title>
-    <ion-title *ngIf="currentUsername" slot="end">{{currentUsername}}</ion-title>
+    <ion-title slot="end"><app-user-indicator></app-user-indicator></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
     <ion-item>
       <ion-label position="floating">Name</ion-label>
       <ion-input type="text" formControlName="name" required minlength="4"></ion-input>
@@ -21,5 +21,20 @@
         </p>
       </div>
     </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-input type="text" formControlName="description"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">additionalFeatures</ion-label>
+      <ion-input type="text" formControlName="additionalFeatures"></ion-input>
+    </ion-item>
+
+    <ion-button color="primary" type="submit" [disabled]="!form.valid">
+      <ion-spinner *ngIf="showSpinner" slot="start"></ion-spinner>
+      <div class="ion-padding">Add</div>
+    </ion-button>
+  </form>
 
 </ion-content>

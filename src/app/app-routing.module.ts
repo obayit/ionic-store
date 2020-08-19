@@ -4,7 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'register',
+    // redirectTo: 'register',
+    redirectTo: 'new-store-item',
     pathMatch: 'full'
   },
   {

@@ -12,11 +12,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NewStoreItemPage implements OnInit {
   currentUser: User;
   item = new StoreItem();
-  itemForm = this.fb.group({
+  form = this.fb.group({
     name: ['USB Cable'],
     description: ['Charging & Data Cable'],
     additionalFeatures: ['Can also be used as a whip'],
   });
+  showSpinner = false;
 
   constructor(public fb: FormBuilder,
     public authService: AuthService,
@@ -28,5 +29,8 @@ export class NewStoreItemPage implements OnInit {
     });
   }
   onSubmit(){}
+  get name() { return this.form.get('name'); }
+  get description() { return this.form.get('description'); }
+  get additionalFeatures() { return this.form.get('additionalFeatures'); }
 
 }
