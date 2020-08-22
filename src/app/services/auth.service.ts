@@ -11,10 +11,10 @@ import { firestore } from 'firebase';
 export class AuthService {
   currentUser  = new Subject<User[]>();
   // users: Observable<User[]>;
-  usersCollection = this.firestore.collection<User>('users');
+  usersCollection = this.afStore.collection<User>('users');
   private currentUserSubscriber: any;
 
-  constructor(public firestore: AngularFirestore,
+  constructor(
     public afAuth: AngularFireAuth,
     public afStore: AngularFirestore,
     ) {}
