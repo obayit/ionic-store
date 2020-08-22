@@ -62,7 +62,7 @@ export class NewStoreItemPage implements OnInit {
     };
     this.storeService.addItem(this.item).then((value) => {
       this.showSpinner = false;
-      this.progressBar += 0.2;
+      this.progressBar += 0.5;
       this.response = 'Item added successfully id#' + value.id;
     }).catch((error) => {
       this.showSpinner = false;
@@ -82,11 +82,12 @@ export class NewStoreItemPage implements OnInit {
     const nativeEl = this.imageInput.nativeElement;
     if(nativeEl.files && nativeEl.files[0]){
       const file = this.imageInput.nativeElement.files[0];
-      const filePath = 'store-items/';
+      const filePath = 'store-items/' + file;
       const ref = this.afStorage.ref(filePath);
       const task = ref.put(file);
       task.percentageChanges().subscribe((value) => {
-        this.progressBar = value/2;
+        this.progressBar = value/(2*100);
+        console.log('setting progressBar to ', this.progressBar);
       })
       return task;
     }
