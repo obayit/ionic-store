@@ -14,5 +14,8 @@ export class StoreService {
   addItem(item: StoreItem){
     return this.itemsCollection.add(item);
   }
+  getItems(){
+    return this.itemsCollection.get();
+  }
 
 }
