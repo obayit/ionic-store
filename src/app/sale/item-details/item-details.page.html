@@ -1,19 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>store-items</ion-title>
-    <ion-title slot="end"><app-user-indicator></app-user-indicator></ion-title>
+    <ion-title>item-details</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-text-center">
-    <ion-spinner *ngIf="!renderList" name="dots"></ion-spinner>
-  </div>
-  <div *ngIf="emptyData" class="ion-text-center ion-padding-top ion-margin-top">
-    <ion-text>Couldn't get any data :(</ion-text>
-  </div>
-  <ion-list>
-    <ion-card class="item-container" *ngFor="let doc of docs" (click)="getItemDetails(doc)">
+    <ion-card class="item-container" *ngIf="doc">
       <ion-card-header>
         <ion-card-title>
           <div >
@@ -40,12 +32,4 @@
         </div>
       </ion-card-content>
     </ion-card>
-  </ion-list>
-  <!-- fab placed to the bottom end -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button href="new-store-item">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
 </ion-content>

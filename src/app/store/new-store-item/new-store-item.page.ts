@@ -5,6 +5,7 @@ import { StoreItem } from 'src/app/interfaces/store-item';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { StoreService } from 'src/app/services/store.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-new-store-item',
@@ -81,8 +82,9 @@ export class NewStoreItemPage implements OnInit {
   uploadFile(){
     const nativeEl = this.imageInput.nativeElement;
     if(nativeEl.files && nativeEl.files[0]){
+      ;
       const file = this.imageInput.nativeElement.files[0];
-      const filePath = 'store-items/' + file;
+      const filePath = 'store-items/' + uuidv4() + file.name;
       const ref = this.afStorage.ref(filePath);
       const task = ref.put(file);
       task.percentageChanges().subscribe((value) => {

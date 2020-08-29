@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { StoreService } from 'src/app/services/store.service';
 // import * as $ from 'jquery';
 
@@ -10,6 +11,7 @@ import { StoreService } from 'src/app/services/store.service';
 export class StoreItemsPage implements OnInit {
   constructor(
     public storeService: StoreService,
+    private router: Router,
   ) { }
   docs: any[] = [];
   renderList = false;
@@ -22,7 +24,10 @@ export class StoreItemsPage implements OnInit {
       }
       let res = [];
       for(let doc of snapshot.docs){
-        res.push(doc.data());
+        res.push({
+          ...doc.data(),
+          ref: doc.ref
+        });
       }
       this.docs = res;
       this.renderList = true;
@@ -36,5 +41,14 @@ export class StoreItemsPage implements OnInit {
     if(imgParent.classList.contains('item-image')){
       imgParent.remove();
     }
+  }
+  getItemDetails(doc){
+    let id: number = doc.id;
+    console.log('#id');
+    console.log(id);
+    console.log(doc);
+    this.router.navigate(['item-details'], { queryParams: {
+      docId: doc.ref.id
+    } });
   }
 }

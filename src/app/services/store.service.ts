@@ -17,5 +17,10 @@ export class StoreService {
   getItems(){
     return this.itemsCollection.get();
   }
+  getItem(docId: string){
+    console.log('#single item');
+    console.log(docId)
+    return this.itemsCollection.doc(docId);
+  }
 
 }
