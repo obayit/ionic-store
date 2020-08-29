@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from 'src/app/interfaces/user';
-import { firestore } from 'firebase';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
 import { StoreService } from 'src/app/services/store.service';
-import { StoreItem } from 'src/app/interfaces/store-item';
+// import * as $ from 'jquery';
 
 @Component({
   selector: 'app-store-items',
@@ -13,39 +8,33 @@ import { StoreItem } from 'src/app/interfaces/store-item';
   styleUrls: ['./store-items.page.scss'],
 })
 export class StoreItemsPage implements OnInit {
-
   constructor(
-    public authService: AuthService,
     public storeService: StoreService,
-    public router: Router,
   ) { }
   docs: any[] = [];
+  renderList = false;
+  emptyData = false;
 
   async ngOnInit() {
-    this.authService.currentAfUser().then((res) => {
-      console.log('store-items: currentAfUser is ');
-      console.log(res);
-      if(!res){
-        // this.router.navigateByUrl('register');
-      }
-    });
     this.storeService.getItems().subscribe((snapshot)=>{
-      for(let doc of snapshot.docs){
-        this.docs.push(doc.data());
+      if(snapshot.docs.length == 0){
+        this.emptyData = true;
       }
+      let res = [];
+      for(let doc of snapshot.docs){
+        res.push(doc.data());
+      }
+      this.docs = res;
+      this.renderList = true;
     })
-    // this.storeService.getItems().subscribe((snapshot)=>{
-    //   console.log(snapshot);
-    //   for(let doc of snapshot.docs){
-    //     console.log(doc);
-    //   }
-    // })
   }
-  populateList(){
-
+  imageFailed(event){
+    console.log('Image failed to load');
+    console.log(event);
+    let imgElement = event.target;
+    let imgParent = imgElement.parentElement;
+    if(imgParent.classList.contains('item-image')){
+      imgParent.remove();
+    }
   }
-  refreshUser(){
-    // this.currentUser = this.authService.currentUser;
-  }
-
 }

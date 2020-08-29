@@ -6,18 +6,38 @@
 </ion-header>
 
 <ion-content>
-
+  <div class="ion-text-center">
+    <ion-spinner *ngIf="!renderList" name="dots"></ion-spinner>
+  </div>
+  <div *ngIf="emptyData" class="ion-text-center ion-padding-top ion-margin-top">
+    <ion-text>Couldn't get any data :(</ion-text>
+  </div>
   <ion-list>
-    <ion-card *ngFor="let doc of docs">
+    <ion-card class="item-container" *ngFor="let doc of docs">
       <ion-card-header>
-        <ion-card-subtitle>{{doc.description}}</ion-card-subtitle>
-        <ion-card-title>{{doc.name}}</ion-card-title>
+        <ion-card-title>
+          <div >
+            <ion-text>
+            {{doc.name}}
+            </ion-text>
+            <ion-text slot="end" color="primary">
+              {{doc.price}} {{doc.currency}}
+            </ion-text>
+          </div>
+        </ion-card-title>
+        <ion-card-subtitle><strong>{{doc.description}}</strong></ion-card-subtitle>
       </ion-card-header>
 
-      <ion-img [src]="doc.imageUrl"></ion-img>
+      <div class="item-image" *ngIf="doc.imageUrl">
+        <ion-img *ngIf="doc.imageUrl" [src]="doc.imageUrl" (ionError)="imageFailed($event)"></ion-img>
+      </div>
 
-      <ion-card-content>{{doc.additionalFeatures}}
-        <ion-text color="primary">{{doc.price}} {{doc.currency}}</ion-text>
+      <ion-card-content>
+        <div>
+          <ion-text>{{doc.additionalFeatures}}</ion-text>
+        </div>
+        <div>
+        </div>
       </ion-card-content>
     </ion-card>
   </ion-list>
