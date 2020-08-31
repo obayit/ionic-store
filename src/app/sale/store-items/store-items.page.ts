@@ -16,6 +16,7 @@ export class StoreItemsPage implements OnInit {
   docs: any[] = [];
   renderList = false;
   emptyData = false;
+  cart = {};
 
   async ngOnInit() {
     this.storeService.getItems().subscribe((snapshot)=>{
@@ -26,8 +27,10 @@ export class StoreItemsPage implements OnInit {
       for(let doc of snapshot.docs){
         res.push({
           ...doc.data(),
-          ref: doc.ref
+          ref: doc.ref,
+          id: doc.id
         });
+        this.cart[doc.id] = 1;
       }
       this.docs = res;
       this.renderList = true;
@@ -50,5 +53,33 @@ export class StoreItemsPage implements OnInit {
     this.router.navigate(['item-details'], { queryParams: {
       docId: doc.ref.id
     } });
+  }
+  addCount(event, doc){
+    event.stopPropagation();
+    if(!this.cart[doc.id]){
+      this.cart[doc.id] = 1;
+    }else{
+      this.cart[doc.id] += 1;
+    }
+    console.log(this.cart);
+  }
+  subCount(event, doc){
+    event.stopPropagation();
+    if(!this.cart[doc.id]){
+      this.cart[doc.id] = 0;
+    }else{
+      this.cart[doc.id] -= 1;
+    }
+    console.log(this.cart);
+  }
+  finalCart = {}
+  addCart(event, doc){
+    event.stopPropagation();
+    if(this.cart[doc.id] && this.cart[doc.id] > 0){
+      this.finalCart[doc.id] = this.cart[doc.id];
+      //TODO: notify user, maybe just a brief visual cart color shift
+    }
+    console.log('Final Cart');
+    console.log(this.finalCart);
   }
 }

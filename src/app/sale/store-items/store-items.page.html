@@ -37,6 +37,12 @@
           <ion-text>{{doc.additionalFeatures}}</ion-text>
         </div>
         <div>
+          <ion-item>
+            <ion-text>{{cart[doc.id]}}</ion-text>
+            <ion-button color="secondary" (click)="subCount($event, doc)">-</ion-button>
+            <ion-button color="primary" (click)="addCount($event, doc)">+</ion-button>
+          </ion-item>
+          <ion-text color="primary" (click)="addCart($event, doc)">Add to cart</ion-text>
         </div>
       </ion-card-content>
     </ion-card>
