@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { NewStoreItemPageRoutingModule } from './new-store-item-routing.module';
 
 import { NewStoreItemPage } from './new-store-item.page';
-import { UserIndicatorComponent } from 'src/app/auth/user-indicator/user-indicator.component';
 
 @NgModule({
   imports: [
@@ -17,7 +16,6 @@ import { UserIndicatorComponent } from 'src/app/auth/user-indicator/user-indicat
     ReactiveFormsModule,
     NewStoreItemPageRoutingModule
   ],
-  declarations: [NewStoreItemPage,
-  UserIndicatorComponent]
+  declarations: [NewStoreItemPage]
 })
 export class NewStoreItemPageModule {}

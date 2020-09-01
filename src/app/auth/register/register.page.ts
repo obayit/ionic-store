@@ -21,8 +21,6 @@ export const matchPassword: ValidatorFn = (control: FormGroup): ValidationErrors
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-  currentUser: User;
-  currentUsername: string;
   user = new User();
   registerSpinner = false;
 
@@ -33,11 +31,6 @@ export class RegisterPage implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
-    if(this.authService.currentUser){
-      this.authService.currentUser.subscribe(user => {
-        this.currentUser = user[0];
-      });
-    }
   }
   async showAlert(header:string, message: string, subheader: string = ''){
     //maybe useful to show/handle backend errors;

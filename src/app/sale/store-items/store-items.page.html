@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>store-items</ion-title>
-    <ion-title slot="end"><app-user-indicator></app-user-indicator></ion-title>
+    <ion-title slot="end"><ion-icon routerLink="/cart" size="large" name="cart"></ion-icon><app-user-indicator></app-user-indicator></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -37,12 +37,7 @@
           <ion-text>{{doc.additionalFeatures}}</ion-text>
         </div>
         <div>
-          <ion-item>
-            <ion-text>{{cart[doc.id]}}</ion-text>
-            <ion-button color="secondary" (click)="subCount($event, doc)">-</ion-button>
-            <ion-button color="primary" (click)="addCount($event, doc)">+</ion-button>
-          </ion-item>
-          <ion-text color="primary" (click)="addCart($event, doc)">Add to cart</ion-text>
+          <ion-text color="primary" (click)="addToCart($event, doc)">Add to cart</ion-text>
         </div>
       </ion-card-content>
     </ion-card>

@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>cart</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="docs">
+    <h1>lol</h1>
+    <ion-card class="item-container" *ngFor="let doc of docs">
+      <ion-card-header>
+        <ion-card-title>
+          <div >
+            <ion-text>
+              {{doc.name}}
+            </ion-text>
+            <ion-text slot="end" color="primary">
+              {{doc.price}} {{doc.currency}}
+            </ion-text>
+          </div>
+        </ion-card-title>
+        <ion-card-subtitle><strong>{{doc.description}}</strong></ion-card-subtitle>
+      </ion-card-header>
+
+      <div class="item-image" *ngIf="doc.imageUrl">
+        <ion-img *ngIf="doc.imageUrl" [src]="doc.imageUrl" (ionError)="imageFailed($event)"></ion-img>
+      </div>
+
+      <ion-card-content>
+        <div>
+          <ion-text>{{doc.additionalFeatures}}</ion-text>
+        </div>
+        <div>
+          <ion-item>
+            <ion-text>{{cart[doc.id]}}</ion-text>
+            <ion-button color="secondary" (click)="subCount($event, doc)">-</ion-button>
+            <ion-button color="primary" (click)="addCount($event, doc)">+</ion-button>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

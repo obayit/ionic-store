@@ -22,5 +22,14 @@ export class StoreService {
     console.log(docId)
     return this.itemsCollection.doc(docId);
   }
-
+  getItemsByIds(ids: [string]){
+    if(!ids){
+      return [];
+    }
+    let res = [];
+    for(let id of ids){
+      res.push(this.itemsCollection.doc(id));
+    }
+    return res;
+  }
 }

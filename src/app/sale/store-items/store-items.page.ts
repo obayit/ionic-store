@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from 'src/app/services/store.service';
 // import * as $ from 'jquery';
 
@@ -12,11 +13,11 @@ export class StoreItemsPage implements OnInit {
   constructor(
     public storeService: StoreService,
     private router: Router,
+    public cartService: CartService
   ) { }
   docs: any[] = [];
   renderList = false;
   emptyData = false;
-  cart = {};
 
   async ngOnInit() {
     this.storeService.getItems().subscribe((snapshot)=>{
@@ -30,7 +31,6 @@ export class StoreItemsPage implements OnInit {
           ref: doc.ref,
           id: doc.id
         });
-        this.cart[doc.id] = 1;
       }
       this.docs = res;
       this.renderList = true;
@@ -54,32 +54,8 @@ export class StoreItemsPage implements OnInit {
       docId: doc.ref.id
     } });
   }
-  addCount(event, doc){
+  addToCart(event, doc){
     event.stopPropagation();
-    if(!this.cart[doc.id]){
-      this.cart[doc.id] = 1;
-    }else{
-      this.cart[doc.id] += 1;
-    }
-    console.log(this.cart);
-  }
-  subCount(event, doc){
-    event.stopPropagation();
-    if(!this.cart[doc.id]){
-      this.cart[doc.id] = 0;
-    }else{
-      this.cart[doc.id] -= 1;
-    }
-    console.log(this.cart);
-  }
-  finalCart = {}
-  addCart(event, doc){
-    event.stopPropagation();
-    if(this.cart[doc.id] && this.cart[doc.id] > 0){
-      this.finalCart[doc.id] = this.cart[doc.id];
-      //TODO: notify user, maybe just a brief visual cart color shift
-    }
-    console.log('Final Cart');
-    console.log(this.finalCart);
+    this.cartService.addItem(doc.id);
   }
 }
