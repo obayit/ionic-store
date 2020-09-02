@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: '',
     // redirectTo: 'register',
-    redirectTo: 'store-items',
+    redirectTo: 'paytabs',
     pathMatch: 'full'
   },
   {
@@ -31,6 +31,10 @@ const routes: Routes = [
   {
     path: 'cart',
     loadChildren: () => import('./sale/cart/cart.module').then( m => m.CartPageModule)
+  },
+  {
+    path: 'paytabs',
+    loadChildren: () => import('./sale/paytabs/paytabs.module').then( m => m.PaytabsPageModule)
   }
 ];
 
