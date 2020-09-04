@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { StoreService } from './store.service';
 
 @Injectable({
@@ -7,14 +8,17 @@ import { StoreService } from './store.service';
 export class CartService {
 
   constructor(
+    private storage: Storage,
     public storeService: StoreService
   ) { }
-  private _cart: [string];
-  addItem(itemId){
-    this._cart.push(itemId);
+  addItem(itemId: string){
+    this.storage.get('cart').then((value) => {
+      if(!value){
+        value = [];
+      }
+      value.push(itemId);
+      this.storage.set('cart', value)
+    });
   }
-  get cart(){ return this._cart; }
-  getItems(){
-    this.storeService.getItemsByIds(this._cart);
-  }
+  get cart(){ return this.storage.get('cart'); }
 }

@@ -6,11 +6,24 @@
 
 <ion-content>
 
+  <div *ngIf="emptyData" class="ion-text-center ion-padding-top ion-margin-top">
+    <ion-text *ngIf="!emptyData">Your cart is empty :)</ion-text>
+    <div *ngIf="emptyData">
+      <ion-text>Couldn't connect to database :(</ion-text>
+      <div *ngFor="let id of ids"><ion-text>{{id}}</ion-text></div>
+    </div>
+  </div>
   <div *ngIf="docs">
-    <h1>lol</h1>
-    <ion-card class="item-container" *ngFor="let doc of docs">
-      <ion-card-header>
-        <ion-card-title>
+    <ion-grid>
+      <ion-row class="item-container" *ngFor="let doc of docs">
+        <ion-col size="5">
+          <div class="item-image cart-image-container" *ngIf="doc.imageUrl">
+            <ion-img *ngIf="doc.imageUrl" class="cart-image" [src]="doc.imageUrl" (ionError)="imageFailed($event)"></ion-img>
+            <!-- <img *ngIf="doc.imageUrl" class="cart-image" src="{{doc.imageUrl}}"/> -->
+          </div>
+        </ion-col>
+
+        <ion-col size="7">
           <div >
             <ion-text>
               {{doc.name}}
@@ -19,26 +32,23 @@
               {{doc.price}} {{doc.currency}}
             </ion-text>
           </div>
-        </ion-card-title>
-        <ion-card-subtitle><strong>{{doc.description}}</strong></ion-card-subtitle>
-      </ion-card-header>
-
-      <div class="item-image" *ngIf="doc.imageUrl">
-        <ion-img *ngIf="doc.imageUrl" [src]="doc.imageUrl" (ionError)="imageFailed($event)"></ion-img>
-      </div>
-
-      <ion-card-content>
-        <div>
-          <ion-text>{{doc.additionalFeatures}}</ion-text>
-        </div>
-        <div>
-          <ion-item>
-            <ion-text>{{cart[doc.id]}}</ion-text>
-            <ion-button color="secondary" (click)="subCount($event, doc)">-</ion-button>
-            <ion-button color="primary" (click)="addCount($event, doc)">+</ion-button>
-          </ion-item>
-        </div>
-      </ion-card-content>
-    </ion-card>
+          <div>
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-text-center ion-align-self-center cart-amount">
+                  <ion-text>1</ion-text>
+                </ion-col>
+                <ion-col>
+                  <ion-button class="cart-amount-btn" fill="clear" (click)="subCount($event, doc)"><ion-icon name="remove-outline"></ion-icon></ion-button>
+                </ion-col>
+                <ion-col>
+                  <ion-button class="cart-amount-btn" fill="clear" (click)="addCount($event, doc)"><ion-icon name="add-outline"></ion-icon></ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-content>

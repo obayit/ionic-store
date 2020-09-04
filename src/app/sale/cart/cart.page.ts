@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-cart',
@@ -8,11 +9,25 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartPage implements OnInit {
 
-  constructor(public cartService: CartService) { }
+  constructor(public cartService: CartService,
+    public storeService: StoreService
+    ) { }
+  ids: [string];
   docs: any;
+  emptyData = false;
 
   ngOnInit() {
-    this.docs = this.cartService.getItems();
+    this.cartService.cart.then((ids) => {
+      this.ids = ids;
+      this.storeService.getItemsByIds(this.ids).subscribe((docs)=>{
+        if(docs.length == 0){
+          this.emptyData = true;
+        }
+        this.docs = docs;
+        console.log('this.docs');
+        console.log(this.docs);
+      });
+    });
   }
   imageFailed(event){
     console.log('Image failed to load');

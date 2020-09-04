@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: '',
     // redirectTo: 'register',
-    redirectTo: 'paytabs',
+    redirectTo: 'store-items',
     pathMatch: 'full'
   },
   {

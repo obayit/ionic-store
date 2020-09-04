@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { StoreItem } from '../interfaces/store-item';
+import { map } from 'rxjs/operators';
+import * as firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +25,7 @@ export class StoreService {
     return this.itemsCollection.doc(docId);
   }
   getItemsByIds(ids: [string]){
-    if(!ids){
-      return [];
-    }
-    let res = [];
-    for(let id of ids){
-      res.push(this.itemsCollection.doc(id));
-    }
-    return res;
+    console.log(`looking for items with ids ${ids}`);
+    return this.afStore.collection<StoreItem>('items' , ref => ref.where( firebase.firestore.FieldPath.documentId() , 'in' , ids)).valueChanges();
   }
 }

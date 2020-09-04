@@ -15,6 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { UserIndicatorComponent } from './auth/user-indicator/user-indicator.component';
+import { IonicStorageModule } from '@ionic/storage';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { UserIndicatorComponent } from './auth/user-indicator/user-indicator.com
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,

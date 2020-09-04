@@ -55,6 +55,7 @@ export class StoreItemsPage implements OnInit {
     } });
   }
   addToCart(event, doc){
+    console.log(`addToCart(event, ${doc.id})`)
     event.stopPropagation();
     this.cartService.addItem(doc.id);
   }

@@ -1,5 +1,7 @@
 {
   "name": "ionic-store",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
