@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from 'src/app/services/cart.service';
+import { Cart, CartService } from 'src/app/services/cart.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
@@ -12,21 +12,29 @@ export class CartPage implements OnInit {
   constructor(public cartService: CartService,
     public storeService: StoreService
     ) { }
-  ids: [string];
+  localCart: Cart;
   docs: any;
   emptyData = false;
 
   ngOnInit() {
-    this.cartService.cart.then((ids) => {
-      this.ids = ids;
-      this.storeService.getItemsByIds(this.ids).subscribe((docs)=>{
-        if(docs.length == 0){
-          this.emptyData = true;
-        }
-        this.docs = docs;
-        console.log('this.docs');
-        console.log(this.docs);
-      });
+    this.cartService.cart.then((cart: Cart) => {
+      if(!cart){
+        cart = new Cart();
+      }
+      this.localCart = cart;
+      let items = this.storeService.getItemsByIds(Object.keys(this.localCart));
+      if(items != null){
+        items.subscribe((docs)=>{
+          if(docs.length == 0){
+            this.emptyData = true;
+          }
+          this.docs = docs;
+          console.log('this.docs');
+          console.log(this.docs);
+        });
+      }else{
+        this.emptyData = true;
+      }
     });
   }
   imageFailed(event){
@@ -39,22 +47,16 @@ export class CartPage implements OnInit {
     }
   }
   cart = {};
-  addCount(event, doc){
+  addCount(event, doc, docs){
     event.stopPropagation();
-    if(!this.cart[doc.id]){
-      this.cart[doc.id] = 1;
-    }else{
-      this.cart[doc.id] += 1;
-    }
+    console.log(`adding ${doc.id}`);
+    console.log(doc);
+    this.cartService.addItem(doc.id);
     console.log(this.cart);
   }
   subCount(event, doc){
     event.stopPropagation();
-    if(!this.cart[doc.id]){
-      this.cart[doc.id] = 0;
-    }else{
-      this.cart[doc.id] -= 1;
-    }
+    this.cartService.decreaseItem(doc.id);
     console.log(this.cart);
   }
 }

@@ -10,7 +10,7 @@
     <ion-text *ngIf="!emptyData">Your cart is empty :)</ion-text>
     <div *ngIf="emptyData">
       <ion-text>Couldn't connect to database :(</ion-text>
-      <div *ngFor="let id of ids"><ion-text>{{id}}</ion-text></div>
+      <ion-text>{{localCart}}</ion-text>
     </div>
   </div>
   <div *ngIf="docs">

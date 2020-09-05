@@ -24,8 +24,11 @@ export class StoreService {
     console.log(docId)
     return this.itemsCollection.doc(docId);
   }
-  getItemsByIds(ids: [string]){
+  getItemsByIds(ids: string[]){
     console.log(`looking for items with ids ${ids}`);
-    return this.afStore.collection<StoreItem>('items' , ref => ref.where( firebase.firestore.FieldPath.documentId() , 'in' , ids)).valueChanges();
+    if(ids.length == 0){
+      return null;
+    }
+    return this.afStore.collection<StoreItem>('items' , ref => ref.where(firebase.firestore.FieldPath.documentId() , 'in' , ids)).valueChanges({ idField: 'id' });
   }
 }
