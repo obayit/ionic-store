@@ -22,7 +22,9 @@ export class CartPage implements OnInit {
         cart = new Cart();
       }
       this.localCart = cart;
-      let items = this.storeService.getItemsByIds(Object.keys(this.localCart));
+      console.log(`localCart is`);
+      console.log(this.localCart);
+      let items = this.storeService.getItemsByIds(Object.keys(this.localCart.items));
       if(items != null){
         items.subscribe((docs)=>{
           if(docs.length == 0){
@@ -33,6 +35,7 @@ export class CartPage implements OnInit {
           console.log(this.docs);
         });
       }else{
+        console.log(`getItemsByIds() returned ${items}`);
         this.emptyData = true;
       }
     });
@@ -46,17 +49,20 @@ export class CartPage implements OnInit {
       imgParent.remove();
     }
   }
-  cart = {};
+  amounts = [];
   addCount(event, doc, docs){
     event.stopPropagation();
     console.log(`adding ${doc.id}`);
     console.log(doc);
-    this.cartService.addItem(doc.id);
-    console.log(this.cart);
+    let amount = this.cartService.addItem(doc.id);
+    amount.subscribe((value) => {
+      if(value != -1){
+        this.amounts[doc.id] = value;
+      }
+    });
   }
   subCount(event, doc){
     event.stopPropagation();
     this.cartService.decreaseItem(doc.id);
-    console.log(this.cart);
   }
 }

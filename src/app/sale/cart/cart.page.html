@@ -36,7 +36,7 @@
             <ion-grid>
               <ion-row>
                 <ion-col class="ion-text-center ion-align-self-center cart-amount">
-                  <ion-text>1</ion-text>
+                  <ion-text *ngIf="amounts && amounts[doc.id]">{{amounts[doc.id]}}</ion-text>
                 </ion-col>
                 <ion-col>
                   <ion-button class="cart-amount-btn" fill="clear" (click)="subCount($event, doc)"><ion-icon name="remove-outline"></ion-icon></ion-button>
