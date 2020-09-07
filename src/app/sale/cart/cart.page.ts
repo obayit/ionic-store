@@ -15,11 +15,14 @@ export class CartPage implements OnInit {
   localCart: Cart;
   docs: any;
   emptyData = false;
+  connectionProblem = false;
 
   ngOnInit() {
     this.cartService.cart.then((cart: Cart) => {
       if(!cart){
         cart = new Cart();
+        this.emptyData = true;
+        return;
       }
       this.localCart = cart;
       console.log(`localCart is`);
@@ -28,15 +31,21 @@ export class CartPage implements OnInit {
       if(items != null){
         items.subscribe((docs)=>{
           if(docs.length == 0){
-            this.emptyData = true;
+            this.connectionProblem = true;
           }
           this.docs = docs;
+          for(let doc of docs){
+            if(!this.localCart.items[doc.id]){
+              this.localCart.items[doc.id] = 1;
+            }
+            this.amounts[doc.id] = this.localCart.items[doc.id];
+          }
           console.log('this.docs');
           console.log(this.docs);
         });
       }else{
         console.log(`getItemsByIds() returned ${items}`);
-        this.emptyData = true;
+        this.connectionProblem = true;
       }
     });
   }

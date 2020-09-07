@@ -17,7 +17,7 @@ export class CartService {
     private storage: Storage,
     public storeService: StoreService
   ) {
-    this.storage.remove('cart');
+    // this.storage.remove('cart');
    }
   addItem(itemId: string){
     var amountRes = new BehaviorSubject(-1);

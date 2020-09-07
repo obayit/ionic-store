@@ -6,13 +6,16 @@
 
 <ion-content>
 
-  <div *ngIf="emptyData" class="ion-text-center ion-padding-top ion-margin-top">
-    <ion-text *ngIf="!emptyData">Your cart is empty :)</ion-text>
-    <div *ngIf="emptyData">
+  <div *ngIf="emptyData || connectionProblem" class="ion-text-center ion-padding-top ion-margin-top">
+    <div *ngIf="connectionProblem">
       <ion-text>Couldn't connect to database :(</ion-text>
       <ion-text>{{localCart}}</ion-text>
     </div>
+    <div *ngIf="emptyData">
+      <ion-text>Your cart is empty :)</ion-text>
+    </div>
   </div>
+
   <div *ngIf="docs">
     <ion-grid>
       <ion-row class="item-container" *ngFor="let doc of docs">
