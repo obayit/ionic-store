@@ -9,7 +9,9 @@
   <div *ngIf="emptyData || connectionProblem" class="ion-text-center ion-padding-top ion-margin-top">
     <div *ngIf="connectionProblem">
       <ion-text>Couldn't connect to database :(</ion-text>
-      <ion-text>{{localCart}}</ion-text>
+      <div *ngFor="let item of getIdxd()">
+        <ion-text>{{item}}</ion-text>
+      </div>
     </div>
     <div *ngIf="emptyData">
       <ion-text>Your cart is empty :)</ion-text>
@@ -38,14 +40,17 @@
           <div>
             <ion-grid>
               <ion-row>
-                <ion-col class="ion-text-center ion-align-self-center cart-amount">
+                <ion-col size="3" class="ion-text-center ion-align-self-center cart-amount">
                   <ion-text *ngIf="amounts && amounts[doc.id]">{{amounts[doc.id]}}</ion-text>
                 </ion-col>
-                <ion-col>
-                  <ion-button class="cart-amount-btn" fill="clear" (click)="subCount($event, doc)"><ion-icon name="remove-outline"></ion-icon></ion-button>
+                <ion-col size="3">
+                  <ion-button class="cart-amount-btn" fill="clear" color="warning" (click)="subCount($event, doc)"><ion-icon name="remove-outline"></ion-icon></ion-button>
                 </ion-col>
-                <ion-col>
+                <ion-col size="3">
                   <ion-button class="cart-amount-btn" fill="clear" (click)="addCount($event, doc)"><ion-icon name="add-outline"></ion-icon></ion-button>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-button class="cart-amount-btn" fill="clear" color="danger"><ion-icon name="trash-outline"></ion-icon></ion-button>
                 </ion-col>
               </ion-row>
             </ion-grid>

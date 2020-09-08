@@ -15,8 +15,10 @@ ion-content {
     font-size: 1.2em;
 }
 .cart-image::part(image){
-    max-height: $cart-height;
-    max-width: 150px;
+    // max-height: $cart-height;
+    // max-width: 150px;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     margin: 0px 0px;
 }

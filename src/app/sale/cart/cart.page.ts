@@ -72,6 +72,16 @@ export class CartPage implements OnInit {
   }
   subCount(event, doc){
     event.stopPropagation();
-    this.cartService.decreaseItem(doc.id);
+    console.log(`adding ${doc.id}`);
+    console.log(doc);
+    let amount = this.cartService.decreaseItem(doc.id);
+    amount.subscribe((value) => {
+      if(value != -1){
+        this.amounts[doc.id] = value;
+      }
+    });
+  }
+  getIdxd(){
+    return Object.keys(this.localCart.items);
   }
 }

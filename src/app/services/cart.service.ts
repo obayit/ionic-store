@@ -40,19 +40,20 @@ export class CartService {
     return amountRes;
   }
   decreaseItem(itemId: string){
+    var amountRes = new BehaviorSubject(-1);
     this.storage.get('cart').then((value: Cart) => {
       if(!value){
         return;
       }
-      if(value.items[itemId] <= 0){
-        delete value[itemId];
-      }else{
+      else{
         value.items[itemId] -= 1;
       }
+      amountRes.next(value.items[itemId]);
       this.storage.set('cart', value)
       console.log(`cart after decreasing ${itemId}`);
       console.log(value);
     });
+    return amountRes;
   }
   get cart(): Promise<Cart> { return this.storage.get('cart'); }
 }
