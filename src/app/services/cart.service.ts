@@ -55,5 +55,20 @@ export class CartService {
     });
     return amountRes;
   }
+  removeItem(itemId: string){
+    var doneRes = new BehaviorSubject(-1);
+    this.storage.get('cart').then((value: Cart) => {
+      if(!value){
+        return;
+      }
+      delete value.items[itemId];
+      this.storage.set('cart', value)
+      doneRes.next(1);
+      console.log(`cart after removing ${itemId}`);
+      console.log(value);
+    });
+    return doneRes;
+  }
+
   get cart(): Promise<Cart> { return this.storage.get('cart'); }
 }

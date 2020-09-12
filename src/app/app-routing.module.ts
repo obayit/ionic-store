@@ -35,6 +35,10 @@ const routes: Routes = [
   {
     path: 'paytabs',
     loadChildren: () => import('./sale/paytabs/paytabs.module').then( m => m.PaytabsPageModule)
+  },
+  {
+    path: 'delivery',
+    loadChildren: () => import('./sale/delivery/delivery.module').then( m => m.DeliveryPageModule)
   }
 ];
 

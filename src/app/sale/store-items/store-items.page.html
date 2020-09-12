@@ -18,14 +18,16 @@
         <ion-card-title>
           <div >
             <ion-text>
-              {{doc.name}}
+              {{spliceText(doc.name, 100)}}
             </ion-text>
             <ion-text slot="end" color="primary">
               {{doc.price}} {{doc.currency}}
             </ion-text>
           </div>
         </ion-card-title>
-        <ion-card-subtitle><strong>{{doc.description}}</strong></ion-card-subtitle>
+        <ion-card-subtitle><strong>
+              {{spliceText(doc.description, 150)}}
+        </strong></ion-card-subtitle>
       </ion-card-header>
 
       <div class="item-image" *ngIf="doc.imageUrl">
@@ -34,7 +36,9 @@
 
       <ion-card-content>
         <div>
-          <ion-text>{{doc.additionalFeatures}}</ion-text>
+          <ion-text>
+            {{spliceText(doc.additionalFeatures, 150)}}
+          </ion-text>
         </div>
         <div>
           <ion-text color="primary" (click)="addToCart($event, doc)">Add to cart</ion-text>

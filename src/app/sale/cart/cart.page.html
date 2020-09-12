@@ -39,18 +39,18 @@
           </div>
           <div>
             <ion-grid>
-              <ion-row>
-                <ion-col size="3" class="ion-text-center ion-align-self-center cart-amount">
+              <ion-row class="cart-btn-row">
+                <ion-col size="3" class="cart-btn-col">
+                  <ion-button class="cart-amount-btn" fill="clear" (click)="removeItem($event, doc)" color="danger"><ion-icon name="trash-outline"></ion-icon></ion-button>
+                </ion-col>
+                <ion-col size="3" class="cart-btn-col">
+                  <ion-button class="cart-amount-btn" [disabled]="amounts[doc.id] <= 1" fill="clear" color="warning" (click)="subCount($event, doc)"><ion-icon name="remove-outline"></ion-icon></ion-button>
+                </ion-col>
+                <ion-col size="3" class="ion-text-center ion-align-self-center cart-amount cart-btn-col">
                   <ion-text *ngIf="amounts && amounts[doc.id]">{{amounts[doc.id]}}</ion-text>
                 </ion-col>
-                <ion-col size="3">
-                  <ion-button class="cart-amount-btn" fill="clear" color="warning" (click)="subCount($event, doc)"><ion-icon name="remove-outline"></ion-icon></ion-button>
-                </ion-col>
-                <ion-col size="3">
+                <ion-col size="3" class="cart-btn-col">
                   <ion-button class="cart-amount-btn" fill="clear" (click)="addCount($event, doc)"><ion-icon name="add-outline"></ion-icon></ion-button>
-                </ion-col>
-                <ion-col size="3">
-                  <ion-button class="cart-amount-btn" fill="clear" color="danger"><ion-icon name="trash-outline"></ion-icon></ion-button>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -59,4 +59,9 @@
       </ion-row>
     </ion-grid>
   </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="sendCart()">
+      <ion-icon name="send-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

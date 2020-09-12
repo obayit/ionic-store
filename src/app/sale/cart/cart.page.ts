@@ -74,6 +74,9 @@ export class CartPage implements OnInit {
     event.stopPropagation();
     console.log(`adding ${doc.id}`);
     console.log(doc);
+    if(this.amounts[doc.id] <= 1){
+      return;
+    }
     let amount = this.cartService.decreaseItem(doc.id);
     amount.subscribe((value) => {
       if(value != -1){
@@ -81,7 +84,20 @@ export class CartPage implements OnInit {
       }
     });
   }
+  removeItem(event, doc){
+    event.stopPropagation();
+    console.log(`removing ${doc.id}`);
+    let done = this.cartService.removeItem(doc.id);
+    done.subscribe((value) => {
+      if(value != -1){
+        this.docs.splice(this.docs.indexOf(doc), 1 ); 
+      }
+    });
+  }
   getIdxd(){
     return Object.keys(this.localCart.items);
+  }
+  sendCart(){
+
   }
 }

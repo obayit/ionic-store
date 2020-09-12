@@ -59,4 +59,11 @@ export class StoreItemsPage implements OnInit {
     event.stopPropagation();
     this.cartService.addItem(doc.id);
   }
+  spliceText(text: string, length: number){
+    if(text.length > length){
+      return text.substring(0, length-1) + '...';
+    }else{
+      return text;
+    }
+  }
 }
