@@ -31,7 +31,7 @@
       </ion-card-header>
 
       <div class="item-image" *ngIf="doc.imageUrl">
-        <ion-img *ngIf="doc.imageUrl" [src]="doc.imageUrl" (ionError)="imageFailed($event)"></ion-img>
+        <ion-img *ngIf="doc.imageUrl" [src]="doc.imageUrl" (ionError)="imageFailed($event, doc.id)"></ion-img>
       </div>
 
       <ion-card-content>

@@ -36,8 +36,8 @@ export class StoreItemsPage implements OnInit {
       this.renderList = true;
     })
   }
-  imageFailed(event){
-    console.log('Image failed to load');
+  imageFailed(event, id){
+    console.log('Image failed to load for id ', id);
     console.log(event);
     let imgElement = event.target;
     let imgParent = imgElement.parentElement;

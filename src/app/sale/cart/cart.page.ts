@@ -24,10 +24,11 @@ export class CartPage implements OnInit {
         this.emptyData = true;
         return;
       }
+      console.log(`cartService.cart is `);
       this.localCart = cart;
-      console.log(`localCart is`);
+      console.log(`localCart is `);
       console.log(this.localCart);
-      let items = this.storeService.getItemsByIds(Object.keys(this.localCart.items));
+      let items = this.storeService.getItemsByIds(this.getIds());
       if(items != null){
         items.subscribe((docs)=>{
           if(docs.length == 0){
@@ -35,10 +36,10 @@ export class CartPage implements OnInit {
           }
           this.docs = docs;
           for(let doc of docs){
-            if(!this.localCart.items[doc.id]){
-              this.localCart.items[doc.id] = 1;
-            }
-            this.amounts[doc.id] = this.localCart.items[doc.id];
+            // if(!this.localCart.items[doc.id]){
+            //   this.localCart.items[doc.id] = 1;
+            // }
+            this.amounts[doc.id] = this.localCart.items.find(r => r.id === doc.id).count;
           }
           console.log('this.docs');
           console.log(this.docs);
@@ -96,5 +97,12 @@ export class CartPage implements OnInit {
   }
   getIdxd(){
     return Object.keys(this.localCart.items);
+  }
+  getIds() {
+    let ids = [];
+    for(let item of this.localCart.items){
+      ids.push(item.id);
+    }
+    return ids;
   }
 }
