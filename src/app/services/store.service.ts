@@ -4,6 +4,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { StoreItem } from '../interfaces/store-item';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
+import { Delivery } from '../interfaces/delivery';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import * as firebase from 'firebase/app';
 export class StoreService {
 
   private itemsCollection = this.afStore.collection<StoreItem>('items');
+  private ordersCollection = this.afStore.collection<Delivery>('orders');
   constructor(public afStore: AngularFirestore,
     public afStorage: AngularFireStorage) {}
   addItem(item: StoreItem){
@@ -30,5 +32,8 @@ export class StoreService {
       return null;
     }
     return this.afStore.collection<StoreItem>('items' , ref => ref.where(firebase.firestore.FieldPath.documentId() , 'in' , ids)).valueChanges({ idField: 'id' });
+  }
+  addOrder(item: Delivery){
+    return this.ordersCollection.add(item);
   }
 }

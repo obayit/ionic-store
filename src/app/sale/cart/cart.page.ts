@@ -97,7 +97,4 @@ export class CartPage implements OnInit {
   getIdxd(){
     return Object.keys(this.localCart.items);
   }
-  sendCart(){
-
-  }
 }
