@@ -5,7 +5,7 @@ import { StoreItem } from '../interfaces/store-item';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { Delivery } from '../interfaces/delivery';
-import { CartService } from './cart.service';
+import { Cart, CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,10 +35,14 @@ export class StoreService {
     }
     return this.afStore.collection<StoreItem>('items' , ref => ref.where(firebase.firestore.FieldPath.documentId() , 'in' , ids)).valueChanges({ idField: 'id' });
   }
-  addOrder(item: Delivery){
-    this.cartService.cart.then((cart) => {
-      // cart.items
-      return this.ordersCollection.add(item);
+  addOrder(delivery: Delivery){
+    return this.cartService.cart.then((cart: Cart) => {
+      let items = [];
+      for(let item of cart.items){
+        items.push({'id': item.id, 'amount': item.count});
+      }
+      delivery.items = items;
+      return this.ordersCollection.add(delivery);
     });
   }
 }

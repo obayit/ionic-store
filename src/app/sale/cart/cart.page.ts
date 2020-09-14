@@ -95,9 +95,6 @@ export class CartPage implements OnInit {
       }
     });
   }
-  getIdxd(){
-    return Object.keys(this.localCart.items);
-  }
   getIds() {
     let ids = [];
     for(let item of this.localCart.items){

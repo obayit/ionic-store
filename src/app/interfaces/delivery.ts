@@ -5,4 +5,5 @@ export class Delivery{
     city: string;
     state: string;
     zipCode: string;
+    items?: any[];
 }

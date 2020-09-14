@@ -9,7 +9,7 @@
   <div *ngIf="emptyData || connectionProblem" class="ion-text-center ion-padding-top ion-margin-top">
     <div *ngIf="connectionProblem">
       <ion-text>Couldn't connect to database :(</ion-text>
-      <div *ngFor="let item of getIdxd()">
+      <div *ngFor="let item of getIds()">
         <ion-text>{{item}}</ion-text>
       </div>
     </div>
