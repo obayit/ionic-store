@@ -18,6 +18,7 @@ export class StoreItemsPage implements OnInit {
   docs: any[] = [];
   renderList = false;
   emptyData = false;
+  permissionDenied = false;
 
   async ngOnInit() {
     this.storeService.getItems().subscribe((snapshot)=>{
@@ -34,6 +35,16 @@ export class StoreItemsPage implements OnInit {
       }
       this.docs = res;
       this.renderList = true;
+    }, (error) => {
+      this.renderList = true;
+      if(error.code && error.code === 'permission-denied'){
+        //Todo: fix permission denied error when there is no published items
+        // it should not say permission denied, instead empty empty store
+        // an easy solution is to just set this.emptyData to true, but it
+        // should not be an error from the beginning, maybe use query instead
+        // of trying to fetch all the data.
+        this.permissionDenied = true;
+      }
     })
   }
   imageFailed(event, id){

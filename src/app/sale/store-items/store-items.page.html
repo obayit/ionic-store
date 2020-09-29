@@ -12,6 +12,9 @@
   <div *ngIf="emptyData" class="ion-text-center ion-padding-top ion-margin-top">
     <ion-text>Couldn't get any data :(</ion-text>
   </div>
+  <div *ngIf="permissionDenied" class="ion-text-center ion-padding-top ion-margin-top">
+    <ion-text>Permission denied :(</ion-text>
+  </div>
   <ion-list>
     <ion-card class="item-container" *ngFor="let doc of docs" (click)="getItemDetails(doc)">
       <ion-card-header>
